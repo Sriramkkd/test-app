@@ -1518,7 +1518,9 @@ class MirrarButton extends Component<Props, State> {
                 </div>
               </div>
             </Layout.Section>
-          </Layout>
+          </Layout><br />
+          <Button variant='primary' onClick={saveData}>{loading ? 'Loading..' : 'Save Changes'}</Button>
+          {toastMarkup}
         </Frame>
       </div>
     );
