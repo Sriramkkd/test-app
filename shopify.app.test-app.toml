@@ -1,0 +1,34 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "43a2aa1d07384ae7de27fc787ab02b07"
+name = "test-app"
+handle = "test-app-9346"
+application_url = "https://dev-vtoshopify.pages.dev"
+embedded = true
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "quickstart-41791e9f.myshopify.com"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products"
+use_legacy_install_flow = true
+
+[auth]
+redirect_urls = [
+  "https://dev-vtoshopify.pages.dev/auth/callback",
+  "https://dev-vtoshopify.pages.dev/auth/shopify/callback",
+  "https://dev-vtoshopify.pages.dev/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-04"
+
+[app_proxy]
+url = "https://dev-vtoshopify.pages.dev"
+subpath = "app-pickup"
+prefix = "apps"
+
+[pos]
+embedded = false

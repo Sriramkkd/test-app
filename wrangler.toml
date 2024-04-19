@@ -1,0 +1,8 @@
+compatibility_date = "2024-04-19"
+
+
+[[d1_databases]]
+binding = "DB"
+database_name = "dev-vtoshopify"
+database_id = "033a262b-04a2-4001-b6b0-e08aff4dd5cd"
+preview_database_id = "DB"
