@@ -1,6 +1,4 @@
-const https = require('https');
-
-const TryonPage = async (session) => {
+const TryonPage = async (session: { shop: string; accessToken: string }) => {
   const shop = session.shop;
   const accessToken = session.accessToken;
 
@@ -8,9 +6,6 @@ const TryonPage = async (session) => {
     page: {
       title: 'Mirrar Tryon',
       body_html: `<script>
-
-
-
 let hasReloaded = false;
 let scriptCount = 0;
 
@@ -48,36 +43,28 @@ if (scriptCount === 0 || scriptCount >= 3) {
     }
   });
 }
-
-      </script>`
+</script>`
     }
   });
 
   const options = {
-    hostname: `${shop}`,
-    path: '/admin/api/2024-01/pages.json',
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Content-Length': pageData.length,
+      'Content-Length': Buffer.byteLength(pageData).toString(),
       'X-Shopify-Access-Token': accessToken
-    }
+    },
+    body: pageData
   };
 
-  const req = https.request(options, (res) => {
-    console.log(`statusCode: ${res.statusCode}`);
-
-    res.on('data', (d) => {
-      process.stdout.write(d);
-    });
-  });
-
-  req.on('error', (error) => {
+  try {
+    const response = await fetch(`https://${shop}/admin/api/2024-01/pages.json`, options);
+    console.log(`statusCode: ${response.status}`);
+    const responseData = await response.json();
+    console.log("Page added Successfully");
+  } catch (error) {
     console.error(error);
-  });
-
-  req.write(pageData);
-  req.end();
+  }
 };
 
 export default TryonPage;

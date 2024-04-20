@@ -1,8 +1,4 @@
-import https from 'https';
-
-const createButtonStyles = async (session) => {
-
-  // Construct the GraphQL query with multiple mutation operations
+const createButtonStyles = async (session: { shop: string; accessToken: string }) => {
   const metafieldData = {
     metafield: {
       namespace: 'mirrar',
@@ -73,39 +69,27 @@ const createButtonStyles = async (session) => {
         pointer: ""
       })
     }
-};
+  };
 
-// Convert the data to a JSON string
-const postData = JSON.stringify(metafieldData);
+  const postData = JSON.stringify(metafieldData);
 
-// Set up the request options
-const options = {
-  hostname: session.shop,
-  path: '/admin/api/2024-01/metafields.json',
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'X-Shopify-Access-Token': session.accessToken,
-    'Content-Length': postData.length
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Shopify-Access-Token': session.accessToken
+    },
+    body: postData
+  };
+
+  try {
+    const response = await fetch(`https://${session.shop}/admin/api/2024-01/metafields.json`, options);
+    console.log(`statusCode: ${response.status}`);
+    const responseData = await response.json();
+    console.log("Styles Added Successfully");
+  } catch (error) {
+    console.error(error);
   }
-};
-
-// Send the request
-const req = https.request(options, (res) => {
-  console.log(`statusCode: ${res.statusCode}`);
-
-  res.on('data', (d) => {
-    process.stdout.write(d);
-  });
-});
-
-req.on('error', (error) => {
-  console.error(error);
-});
-
-// Write the JSON data to the request
-req.write(postData);
-req.end();
 };
 
 export default createButtonStyles;
