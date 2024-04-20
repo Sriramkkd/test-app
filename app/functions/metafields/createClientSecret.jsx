@@ -1,6 +1,5 @@
 import createButtonStyles from "./createButtonStyles";
-
-const createClientSecret = async (session: { shop: string; accessToken: string }) => {
+const createClientSecret = async (session ) => {
   const metafieldData = {
     metafield: {
       namespace: 'mirrar',

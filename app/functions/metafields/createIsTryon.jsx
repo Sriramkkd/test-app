@@ -1,4 +1,4 @@
-const createIsTryon = async (session: { shop: string; accessToken: string }) => {
+const createIsTryon = async (session) => {
   const graphqlQuery = {
     query: `mutation CreateMetafieldDefinition($definition: MetafieldDefinitionInput!) {
       metafieldDefinitionCreate(definition: $definition) {
@@ -42,7 +42,7 @@ const createIsTryon = async (session: { shop: string; accessToken: string }) => 
       console.log("Is Tryon Metaield creation failed");
       return;
     }
-    const responseData:any = await response.json();
+    const responseData = await response.json();
     if (responseData.data.metafieldDefinitionCreate.createdDefinition === null) {
       console.log("Is Tryon Metaield already existed");
     } else {

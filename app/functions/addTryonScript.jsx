@@ -1,11 +1,10 @@
 import addScriptTag from './addScriptTag';
-import addTryonScript from './addTryonScript';
 
-const addJquery = async (session: { shop: string; accessToken: string }) => {
+const addTryonScript = async (session) => {
   const data = JSON.stringify({
     "script_tag": {
       "event": "onload",
-      "src": "https://code.jquery.com/jquery-3.6.0.min.js",
+      "src": "https://cdn.mirrar.online/js/init.min.js",
       "cache": false
     }
   });
@@ -23,11 +22,11 @@ const addJquery = async (session: { shop: string; accessToken: string }) => {
   try {
     const response = await fetch(`https://${session.shop}/admin/api/2024-01/script_tags.json`, options);
     const responseData = await response.json();
-    addTryonScript(session);
-    console.log('Response:', "JQuery Added Successfully");
+    addScriptTag(session);
+    console.log('Response:', responseData);
   } catch (error) {
     console.error('Error:', error);
   }
 };
 
-export default addJquery;
+export default addTryonScript;

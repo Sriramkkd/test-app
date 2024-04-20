@@ -1,4 +1,4 @@
-const createApiKey = async (session: { shop: string; accessToken: string }) => {
+const createApiKey = async (session) => {
   const metafieldData = {
     metafield: {
       namespace: 'mirrar',

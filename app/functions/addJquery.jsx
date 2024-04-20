@@ -1,8 +1,10 @@
-const addScriptTag = async (session: { shop: string; accessToken: string }) => {
+import addTryonScript from './addTryonScript';
+
+const addJquery = async (session) => {
   const data = JSON.stringify({
     "script_tag": {
       "event": "onload",
-      "src": "https://vtoshopify.pages.dev/assets/tryon.js",
+      "src": "https://code.jquery.com/jquery-3.6.0.min.js",
       "cache": false
     }
   });
@@ -20,10 +22,11 @@ const addScriptTag = async (session: { shop: string; accessToken: string }) => {
   try {
     const response = await fetch(`https://${session.shop}/admin/api/2024-01/script_tags.json`, options);
     const responseData = await response.json();
-    console.log('Response:', responseData);
+    addTryonScript(session);
+    console.log('Response:', "JQuery Added Successfully");
   } catch (error) {
     console.error('Error:', error);
   }
 };
 
-export default addScriptTag;
+export default addJquery;

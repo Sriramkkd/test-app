@@ -1,4 +1,4 @@
-const TryonPage = async (session: { shop: string; accessToken: string }) => {
+const TryonPage = async (session) => {
   const shop = session.shop;
   const accessToken = session.accessToken;
 

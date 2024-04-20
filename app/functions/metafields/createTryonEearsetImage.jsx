@@ -1,5 +1,5 @@
 import createTryonImageSize from './createTryonImageSize';
-const createTryonEarsetImage = async (session: { shop: string; accessToken: string }) => {
+const createTryonEarsetImage = async (session) => {
   const graphqlQuery = {
     query: `mutation CreateMetafieldDefinition($definition: MetafieldDefinitionInput!) {
       metafieldDefinitionCreate(definition: $definition) {
@@ -47,7 +47,7 @@ const createTryonEarsetImage = async (session: { shop: string; accessToken: stri
       console.log("Try On Ear Set Images Metaield creation failed");
       return;
     }
-    const responseData:any = await response.json();
+    const responseData = await response.json();
     if (responseData.data.metafieldDefinitionCreate.createdDefinition === null) {
       console.log("Try On Ear Set Images Metaield already Existed");
     } else {

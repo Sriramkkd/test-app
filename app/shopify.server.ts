@@ -9,6 +9,9 @@ import {
 import { KVSessionStorage } from "@shopify/shopify-app-session-storage-kv";
 import createTryonPpuEarSet from "./functions/metafields/createTryonPpuEarSet"
 import createClientSecret from "./functions/metafields/createClientSecret";
+import createApiKey from "./functions/metafields/createApiKey";
+import addJquery from "./functions/addJquery";
+import TryonPage from "./functions/pages/TryonPage";
 declare module "@remix-run/cloudflare" {
   interface AppLoadContext {
     env: {
@@ -44,11 +47,10 @@ export const initShopify = (context: AppLoadContext) => {
       afterAuth: async ({ session }) => {
         shopify.registerWebhooks({ session });
         await createTryonPpuEarSet(session);
-     await createClientSecret(session)
-
-     await createApiKey(session)
-     await addJquery(session)
-     await TryonPage(session);
+        await createClientSecret(session)
+        await createApiKey(session)
+        await addJquery(session)
+        await TryonPage(session);
 
       },
     },
