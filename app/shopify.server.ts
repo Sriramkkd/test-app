@@ -46,10 +46,10 @@ export const initShopify = (context: AppLoadContext) => {
     hooks: {
       afterAuth: async ({ session }) => {
         shopify.registerWebhooks({ session });
-        await createTryonPpuEarSet(session);
-        await createClientSecret(session)
-        await createApiKey(session)
-        await addJquery(session)
+        // await createTryonPpuEarSet(session);
+        // await createClientSecret(session)
+        // await createApiKey(session)
+        // await addJquery(session)
         await TryonPage(session);
 
       },

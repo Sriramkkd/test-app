@@ -1,4 +1,8 @@
-const createButtonStyles = async (session: { shop: string; accessToken: string }) => {
+interface Session{
+  shop:string,
+  accessToken:string
+}
+const createButtonStyles = async (session:Session) => {
   const metafieldData = {
     metafield: {
       namespace: 'mirrar',
