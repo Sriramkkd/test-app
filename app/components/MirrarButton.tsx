@@ -196,7 +196,7 @@ class MirrarButton extends Component<Props, State> {
           },
         }
       );
-      const keyData = await keyResponse.json();
+      const keyData = await keyResponse.text();
       const key = keyData;
 
       this.setState({ api: key, store: selfStore.shop });

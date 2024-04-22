@@ -22,13 +22,18 @@ const Index: React.FC<IndexProps> = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const selfStore = JSON.parse(
-          sessionStorage.getItem("app-bridge-config") || "",
-        );
-        const keyData = await fetch(
-          `https://vtoshopify.pages.dev/data?shop=${selfStore.shop}`,
-        );
-        const key = keyData;
+        var selfStore = JSON.parse(sessionStorage.getItem("app-bridge-config"));
+
+      const keyResponse = await fetch(
+        "https://vtoshopify.pages.dev/data?shop=" + selfStore.shop,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const keyData = await keyResponse.text();
+      const key = keyData;
         setApi(key);
         setStore(selfStore.shop);
 
@@ -62,7 +67,7 @@ const Index: React.FC<IndexProps> = (props) => {
           },
         );
 
-        const responseData:any = await response.json();
+        const responseData = await response.json();
         setMetafields(
           responseData.data.shop.metafields.edges.map((edge: any) => edge.node),
         );

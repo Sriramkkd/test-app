@@ -3,6 +3,8 @@ interface Session{
   accessToken:string
 }
 const createButtonStyles = async (session:Session) => {
+  const shop = session.shop;
+  const accessToken = session.accessToken;
   const metafieldData = {
     metafield: {
       namespace: 'mirrar',
@@ -81,13 +83,13 @@ const createButtonStyles = async (session:Session) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-Shopify-Access-Token': session.accessToken
+      'X-Shopify-Access-Token': accessToken
     },
     body: postData
   };
 
   try {
-    const response = await fetch(`https://${session.shop}/admin/api/2024-01/metafields.json`, options);
+    const response = await fetch(`https://${shop}/admin/api/2024-01/metafields.json`, options);
     console.log(`statusCode: ${response.status}`);
     const responseData = await response.json();
     console.log("Styles Added Successfully");

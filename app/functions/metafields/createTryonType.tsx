@@ -4,6 +4,8 @@ interface Session{
   accessToken:string
 }
 const createTryonType = async (session:Session) => {
+  const shop = session.shop;
+  const accessToken = session.accessToken;
   const graphqlQuery = JSON.stringify({
     query: `mutation CreateMetafieldDefinition($definition: MetafieldDefinitionInput!) {
       metafieldDefinitionCreate(definition: $definition) {
@@ -38,11 +40,11 @@ const createTryonType = async (session:Session) => {
   });
 
   try {
-    const response = await fetch(`https://${session.shop}/admin/api/2024-01/graphql.json`, {
+    const response = await fetch(`https://${shop}/admin/api/2024-01/graphql.json`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Shopify-Access-Token': session.accessToken
+        'X-Shopify-Access-Token': accessToken
       },
       body: graphqlQuery
     });
@@ -53,7 +55,7 @@ const createTryonType = async (session:Session) => {
     if (responseData.createdDefinition === null) {
       console.log("Tryon Type Already Exist");
     } else {
-      createIsTryon(session);
+      await createIsTryon(session);
       console.log("Tryon Type Metafield Created");
     }
   } catch (error) {

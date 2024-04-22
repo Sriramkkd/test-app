@@ -6,6 +6,8 @@ interface Session {
 }
 
 const createTryonPpuEarSet = async (session: Session) => {
+  const shop = session.shop;
+  const accessToken = session.accessToken;
   async function fetchAndUpdateJson(url: string, callback: (data: any) => void, postData: any | null = null) {
     try {
       if (postData) {
@@ -13,7 +15,7 @@ const createTryonPpuEarSet = async (session: Session) => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'X-Shopify-Access-Token': session.accessToken,
+            'X-Shopify-Access-Token': accessToken,
           },
           body: JSON.stringify(postData),
         });
@@ -62,7 +64,7 @@ const createTryonPpuEarSet = async (session: Session) => {
   });
 
   // Define request options
-  const url = `https://${session.shop}/admin/api/2024-01/graphql.json`;
+  const url = `https://${shop}/admin/api/2024-01/graphql.json`;
 
   // Send HTTPS request
   try {
@@ -70,7 +72,7 @@ const createTryonPpuEarSet = async (session: Session) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Shopify-Access-Token': session.accessToken,
+        'X-Shopify-Access-Token': accessToken,
       },
       body: graphqlQuery,
     });
@@ -78,14 +80,14 @@ const createTryonPpuEarSet = async (session: Session) => {
     const responseData = result.data.metafieldDefinitionCreate;
     if (responseData.createdDefinition === null) {
       const updateUrl = 'https://vtoshopify.pages.dev/update';
-      const postData = { key: session.accessToken, shop: session.shop };
+      const postData = { key: accessToken, shop: shop };
       fetchAndUpdateJson(updateUrl, handleUpdatedJson, postData);
       console.log('Ear Set Size Metafield already Exist');
     } else {
       const updateUrl = 'https://vtoshopify.pages.dev/update';
-      const postData = { key: session.accessToken, shop: session.shop };
+      const postData = { key: accessToken, shop: shop };
       fetchAndUpdateJson(updateUrl, handleUpdatedJson, postData);
-      createTryonYEarPosition(session);
+      await createTryonYEarPosition(session);
       console.log('Ear Set Size Metafield Created');
     }
   } catch (error) {
